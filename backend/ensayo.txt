@@ -1,0 +1,953 @@
+
+
+#Los gráficos de atras son los gráficos de muestra. 
+#A continuación tenemos todos los gráficos en orden (según lo que me compartio Javier):
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/tipo/documento?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Distribución de los tipos de documentos'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/genero?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Distribución por género'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/edad?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(chartData) {
+                Highcharts.chart('container', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Distribucion de edad'
+                },
+                xAxis: {
+                    categories: chartData.categories,
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Rangos de edad'
+                    },
+                    title: {
+                        text: 'Edad'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Cantidad de personas'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        colorByPoint: true,
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Personas',
+                    data: chartData.data 
+                }]
+            });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/escolaridad?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Nivel de escolaridad (el más alto alcanzado)'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/estado/civil?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Estado civil'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/categoria/licencia/auto?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Categoria de la licencia de conducción (vehículo-carro)'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/categoria/licencia/moto?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Categoria de la licencia de conducción (moto)'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/capacitacion?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: '¿Ha recibido capacitación en seguridad vial?'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/siniestros?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: '¿Ha sufrido siniestros víales en los últimos años?'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/rol/siniestros?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Rol como actor vial en el accidente'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/cantidad/infracciones?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(chartData) {
+                Highcharts.chart('container', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '¿Cuántas infracciones de tránsito ha cometido?'
+                },
+                xAxis: {
+                    categories: chartData.categories,
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Número de infracciones cometidas'
+                    },
+                    title: {
+                        text: 'Numero de infracciones'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Cantidad de personas'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        colorByPoint: true,
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Personas',
+                    data: chartData.data 
+                }]
+            });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/tipo/infracciones?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Tipos de infracciones'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/estado/pago?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Estado de pago de las infracciones'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Porcentaje: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/medio/transporte?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Medio de transporte que utiliza con frecuencia para el desplazamiento (casa-trabajo-casa)'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Percentage: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/conductor/laboral?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: '¿Cumple rol como conductor laboral para desplazamientos laborales?'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Percentage: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        const id_empresa = 170;
+        $.ajax({
+            url: ´http://localhost:8001/api/tipo/vehiculo?id_empresa=${id_empresa}´,
+            method: 'GET',
+            dataType: 'json',
+            success: function(seriesData) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        zooming: {
+                            type: 'xy'
+                        },
+                        panning: {
+                            enabled: true,
+                            type: 'xy'
+                        },
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: 'Tipo de vehículo automotor o no motor que conduce más frecuente (laboralmente)'
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return `<b>${this.point.name}</b><br/>
+                                    Percentage: <b>${this.point.y.toFixed(2)}%</b><br/>
+                                    Total: <b>${this.point.options.total}</b>`;
+                    }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: 20,
+                                format: '{point.name}: {point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1em'
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [seriesData]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+            }
+        });
+    });
+</script>
+
+<script>
+        $(document).ready(function() {
+            const id_empresa = 170;
+            $.ajax({
+                url: `http://localhost:8001/api/comparativo?id_empresa=${id_empresa}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(chartData) {
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'areaspline'
+                        },
+                        title: {
+                            text: 'Porcentaje de infracciones y siniestros por rango de edad'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'left',
+                            verticalAlign: 'top',
+                            x: 120,
+                            y: 70,
+                            floating: true,
+                            borderWidth: 1,
+                            backgroundColor: 'var(--highcharts-background-color, #ffffff)'
+                        },
+                        xAxis: {
+                            categories: chartData.categories,
+                            title: {
+                                text: 'Rango de edad'
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Porcentaje'
+                            }
+                        },
+                        tooltip: {
+                            shared: true,
+                            headerFormat: '<b>Rango de edad {point.x}</b><br>'
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            areaspline: {
+                                fillOpacity: 0.5
+                            }
+                        },
+                        series: chartData.data
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    $('#container').html('<div style="color: red; padding: 20px;">Error loading data: ' + error + '</div>');
+                }
+            });
+        });
+</script>
+
+
